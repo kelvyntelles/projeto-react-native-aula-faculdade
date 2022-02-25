@@ -1,6 +1,7 @@
 import { View, Text, TextInput, Button, Keyboard } from "react-native";
 import { useState } from "react";
 import Result from "../Result";
+import { Container } from "./styled";
 
 export default function Form() {
 
@@ -14,8 +15,17 @@ export default function Form() {
         for (let i = 1; i <= tempo; i++) {
             valor = capital * (1 + taxa / 100) ** tempo;
         }
-        Keyboard.dismiss();
-        return setMontante(valor);
+        return setMontante(valor.toFixed(2));
+    }
+
+    function validar() {
+        if(capital != null && taxa != null && tempo != null) {
+            calcularJuros();
+            setCapital(null);
+            setTaxa(null);
+            setTempo(null);
+            Keyboard.dismiss();
+        }
     }
 
     return (
@@ -41,7 +51,7 @@ export default function Form() {
                 />
                 <Button 
                     title="Calculadora"
-                    onPress={() => calcularJuros()}
+                    onPress={() => validar()}
                 />
             </View>
             <View>
